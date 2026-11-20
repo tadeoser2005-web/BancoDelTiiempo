@@ -17,7 +17,7 @@ const DEFAULT_AVATARS = [
 ];//skins por defecto
 
 export const ProfileScreen = () => {
-    // Profile state
+
     const [isEditing, setIsEditing] = useState(false);
     const [profileName, setProfileName] = useState('Juan Ramirez');
     const [email, setEmail] = useState('juangramirez.com');
@@ -110,7 +110,6 @@ export const ProfileScreen = () => {
                     )}
                 </View>
 
-                {/* View Mode */}
                 {!isEditing ? (
                     <>
                         {/* Profile Card Header (Matching PDF Page 20) */}

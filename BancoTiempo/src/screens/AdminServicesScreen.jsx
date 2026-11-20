@@ -15,7 +15,6 @@ export const AdminServicesScreen = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filterTab, setFilterTab] = useState('todos');
 
-    // Initial catalog of published services across all users
     const [servicesList, setServicesList] = useState([
         {
             id: 'srv-1',
@@ -91,10 +90,9 @@ export const AdminServicesScreen = () => {
         },
     ]);
 
-    // Regla R13: Borrado Lógico en lugar de DELETE físico
     const handleDeactivateService = (serviceId, title) => {
         Alert.alert(
-            'Dar de baja servicio (Regla R13)',
+            'Dar de baja servicio ',
             `¿Deseas dar de baja "${title}"? Se aplicará borrado lógico (estatus: Inactivo) para preservar el historial de transacciones e intercambios previos.`,
             [
                 { text: 'Cancelar', style: 'cancel' },
@@ -107,7 +105,7 @@ export const AdminServicesScreen = () => {
                                 s.id === serviceId ? { ...s, status: 'Inactivo' } : s
                             )
                         );
-                        Alert.alert('Éxito (R13)', 'El servicio fue marcado como Inactivo.');
+                        Alert.alert('Éxito ', 'El servicio fue marcado como Inactivo.');
                     },
                 },
             ]
@@ -173,16 +171,14 @@ export const AdminServicesScreen = () => {
                     </View>
                 </View>
 
-                {/* Right Main Content */}
                 <View style={styles.contentArea}>
                     <View style={styles.topHeader}>
                         <Text style={styles.moduleTitle}>Gestión de Servicios</Text>
                         <Text style={styles.moduleSubtitle}>
-                            Monitoreo y moderación del catálogo UPQ (RF-13, Pág. 28)
+                            Servicios
                         </Text>
                     </View>
 
-                    {/* Search bar */}
                     <View style={styles.searchContainer}>
                         <TextInput
                             style={styles.searchInput}
@@ -192,7 +188,6 @@ export const AdminServicesScreen = () => {
                         />
                     </View>
 
-                    {/* Status Filter Tabs */}
                     <View style={styles.tabsRow}>
                         {['todos', 'activos', 'pausados', 'inactivos'].map((tab) => (
                             <TouchableOpacity
@@ -215,7 +210,6 @@ export const AdminServicesScreen = () => {
                         ))}
                     </View>
 
-                    {/* Services List */}
                     <ScrollView
                         style={styles.listScroll}
                         contentContainerStyle={styles.listContent}
@@ -262,7 +256,6 @@ export const AdminServicesScreen = () => {
                                     <Text style={styles.detailTag}>📅 {item.availability}</Text>
                                 </View>
 
-                                {/* Admin Actions: Pause, Logical Delete R13 */}
                                 <View style={styles.actionsRow}>
                                     {item.status !== 'Inactivo' && (
                                         <TouchableOpacity
@@ -280,11 +273,11 @@ export const AdminServicesScreen = () => {
                                             style={styles.deleteActionBtn}
                                             onPress={() => handleDeactivateService(item.id, item.title)}
                                         >
-                                            <Text style={styles.deleteActionText}>Dar de Baja (R13)</Text>
+                                            <Text style={styles.deleteActionText}>Dar de Baja </Text>
                                         </TouchableOpacity>
                                     ) : (
                                         <Text style={styles.logicalDeletedLabel}>
-                                            Baja lógica aplicada (historial protegido)
+                                            Baja  aplicada
                                         </Text>
                                     )}
                                 </View>

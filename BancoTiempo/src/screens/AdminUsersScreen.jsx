@@ -3,62 +3,174 @@ import {
     View,
     Text,
     StyleSheet,
-    TouchableOpacity,
+    Pressable,
     SafeAreaView,
     StatusBar,
     ScrollView,
+    FlatList,
     TextInput,
+    Switch,
     Image,
 } from 'react-native';
-import { colors } from '../styles/theme.js';
+
+const VisualSwitch = ({ initialValue = false, activeColor = '#0084FF' }) => {
+    const [enabled, setEnabled] = useState(initialValue);
+    return (
+        <Switch
+            value={enabled}
+            onValueChange={setEnabled}
+            trackColor={{ false: '#CBD5E1', true: activeColor }}
+            thumbColor="#FFFFFF"
+        />
+    );
+};
+
+const USERS_LIST = [
+    {
+        id: 'u-juan',
+        name: 'Juan Ramirez',
+        email: 'juan.ramirez@upq.edu.mx',
+        matricula: '122040112',
+        career: 'ITI • 6to Cuatrimestre',
+        role: 'Administrador',
+        isAdmin: true,
+        status: 'Activo',
+        isActive: true,
+        credits: '8.5',
+        avatar:'',
+    },
+    {
+        id: 'u-ramiro',
+        name: 'Ramiro Ramirez',
+        email: 'ramiro@ramirez.com',
+        matricula: '122045678',
+        career: 'Mecatrónica • 5to',
+        role: 'Usuario',
+        isAdmin: false,
+        status: 'Activo',
+        isActive: true,
+        credits: '11.0',
+        avatar:'',
+    },
+    {
+        id: 'u-valeria',
+        name: 'Glenda Barrera',
+        email: 'gBarrera@gmail.com',
+        matricula: '122048910',
+        career: 'Manufactura • 7mo',
+        role: 'Usuario',
+        isAdmin: false,
+        status: 'Activo',
+        isActive: true,
+        credits: '9.5',
+        avatar:'',
+    },
+    {
+        id: 'u-jason',
+        name: 'Jason Gomez',
+        email: 'jasong@gomez.com',
+        matricula: '122041234',
+        career: 'ITI • 4to Cuatrimestre',
+        role: 'Usuario',
+        isAdmin: false,
+        status: 'Inactivo',
+        isActive: false,
+        credits: '4.0',
+        avatar:'',
+    },
+];
 
 export const AdminUsersScreen = () => {
-    const [searchTerm, setSearchTerm] = useState('');
+    const renderUserCard = ({ item }) => (
+        <View style={[styles.userCard, !item.isActive && styles.userCardInactive]}>
+            {/* Top Info */}
+            <View style={styles.userTopRow}>
+                <Image source={{ uri: item.avatar }} style={styles.userAvatar} />
+                <View style={styles.userInfo}>
+                    <View style={styles.nameBadgeRow}>
+                        <Text style={styles.userName}>{item.name}</Text>
+                        <View
+                            style={[
+                                styles.roleBadge,
+                                item.isAdmin ? styles.roleBadgeAdmin : styles.roleBadgeUser,
+                            ]}
+                        >
+                            <Text
+                                style={[
+                                    styles.roleBadgeText,
+                                    item.isAdmin ? styles.roleTextAdmin : styles.roleTextUser,
+                                ]}
+                            >
+                                {item.role}
+                            </Text>
+                        </View>
+                    </View>
+                    <Text style={styles.userEmail}>{item.email}</Text>
+                    <Text style={styles.userMeta}>
+                        Mat. {item.matricula} • {item.career} • {item.credits} cr
+                    </Text>
+                </View>
+            </View>
 
-    const usersList = [
-        {
-            id: 'u-ramiro',
-            name: 'Ramiro Ramirez',
-            email: 'ramiro@ramirez.com',
-            role: 'Usuario',
-            status: 'Activo',
-            avatar: '',
-        },
-        {
-            id: 'u-Barrera',
-            name: 'Glenda Barrera',
-            email: 'Gbarreraa@gmail.com',
-            role: 'Usuario',
-            status: 'Activo',
-            avatar: '',
-        },
-        {
-            id: 'u-momoa',
-            name: 'Jason Momoa',
-            email: 'jasong@gmail.com',
-            role: 'Usuario',
-            status: 'Activo',
-            avatar: '',
-        },
-        {
-            id: 'u-valeria',
-            name: 'Valeria Hernandez',
-            email: 'valeria@gmail.com',
-            role: 'Usuario',
-            status: 'Activo',
-            avatar: '',
-        },
-    ];
+            {/* Switches Row: Admin Role & Account Status */}
+            <View style={styles.controlsBox}>
+                <View style={styles.switchControlRow}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.controlLabel}>Permisos de Administrador</Text>
+                        <Text style={styles.controlSub}>
+                            Puede gestionar usuarios, categorías y reportes
+                        </Text>
+                    </View>
+                    <VisualSwitch initialValue={item.isAdmin} activeColor="#4F46E5" />
+                </View>
 
-    const filteredUsers = usersList.filter(u =>
-        u.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        u.email.toLowerCase().includes(searchTerm.toLowerCase())
+                <View style={styles.divider} />
+
+                <View style={styles.switchControlRow}>
+                    <View style={{ flex: 1 }}>
+                        <Text style={styles.controlLabel}>Cuenta Activa ({item.status})</Text>
+                        <Text style={styles.controlSub}>
+                            Habilitar o suspender acceso al sistema
+                        </Text>
+                    </View>
+                    <VisualSwitch initialValue={item.isActive} activeColor="#22C55E" />
+                </View>
+            </View>
+
+            {/* Admin Action Buttons */}
+            <View style={styles.actionsRow}>
+                <Pressable
+                    style={[
+                        styles.actionChipBtn,
+                        item.isAdmin ? styles.btnDemote : styles.btnPromote,
+                    ]}
+                >
+                    <Text
+                        style={[
+                            styles.actionChipText,
+                            item.isAdmin ? styles.textDemote : styles.textPromote,
+                        ]}
+                    >
+                        {item.isAdmin ? 'Quitar Admin' : 'Hacer Admin'}
+                    </Text>
+                </Pressable>
+
+                <Pressable style={[styles.actionChipBtn, styles.btnEdit]}>
+                    <Text style={styles.textEdit}>Editar</Text>
+                </Pressable>
+
+                <Pressable style={[styles.actionChipBtn, styles.btnDelete]}>
+                    <Text style={styles.textDelete}>Eliminar</Text>
+                </Pressable>
+            </View>
+        </View>
     );
 
     return (
         <SafeAreaView style={styles.container}>
-            <StatusBar barStyle="dark-content" />
+            <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
             <View style={styles.mainLayout}>
+                {/* Sidebar */}
                 <View style={styles.sidebar}>
                     <View style={styles.sideItem}>
                         <Text style={styles.sideIcon}>📊</Text>
@@ -67,7 +179,9 @@ export const AdminUsersScreen = () => {
 
                     <View style={[styles.sideItem, styles.sideItemActive]}>
                         <Text style={styles.sideIcon}>👥</Text>
-                        <Text style={[styles.sideLabel, styles.sideLabelActive]}>Gestión{'\n'}Usuarios</Text>
+                        <Text style={[styles.sideLabel, styles.sideLabelActive]}>
+                            Gestión{'\n'}Usuarios
+                        </Text>
                     </View>
 
                     <View style={styles.sideItem}>
@@ -76,68 +190,91 @@ export const AdminUsersScreen = () => {
                     </View>
 
                     <View style={styles.sideItem}>
-                        <Text style={styles.sideIcon}>📋</Text>
-                        <Text style={styles.sideLabel}>Reportes</Text>
+                        <Text style={styles.sideIcon}>🏷️</Text>
+                        <Text style={styles.sideLabel}>Categorías</Text>
                     </View>
 
                     <View style={styles.sideItem}>
-                        <Text style={styles.sideIcon}>⚡</Text>
-                        <Text style={styles.sideLabel}>Transaccione</Text>
+                        <Text style={styles.sideIcon}>📋</Text>
+                        <Text style={styles.sideLabel}>Reportes</Text>
                     </View>
                 </View>
 
-                <ScrollView style={styles.contentScroll} contentContainerStyle={styles.scrollPadding} showsVerticalScrollIndicator={false}>
+                {/* Main Content */}
+                <ScrollView
+                    style={styles.contentScroll}
+                    contentContainerStyle={styles.scrollPadding}
+                    showsVerticalScrollIndicator={false}
+                >
+                    {/* Header */}
+                    <View style={styles.headerRow}>
+                        <View style={{ flex: 1 }}>
+                            <Text style={styles.headerTitle}>Administración de Usuarios</Text>
+                            <Text style={styles.headerSubtitle}>
+                                Gestiona cuentas, asigna administradores y elimina usuarios
+                            </Text>
+                        </View>
+                        <Pressable style={styles.addBtn}>
+                            <Text style={styles.addBtnText}>+ Nuevo</Text>
+                        </Pressable>
+                    </View>
+
+                    {/* Mini Stats */}
+                    <View style={styles.statsRow}>
+                        <View style={styles.statBox}>
+                            <Text style={styles.statNum}>4</Text>
+                            <Text style={styles.statLabel}>Totales</Text>
+                        </View>
+                        <View style={styles.statBox}>
+                            <Text style={[styles.statNum, { color: '#4F46E5' }]}>1</Text>
+                            <Text style={styles.statLabel}>Admins</Text>
+                        </View>
+                        <View style={styles.statBox}>
+                            <Text style={[styles.statNum, { color: '#10B981' }]}>3</Text>
+                            <Text style={styles.statLabel}>Activos</Text>
+                        </View>
+                        <View style={styles.statBox}>
+                            <Text style={[styles.statNum, { color: '#EF4444' }]}>1</Text>
+                            <Text style={styles.statLabel}>Inactivos</Text>
+                        </View>
+                    </View>
+
                     {/* Search Input */}
                     <View style={styles.searchBar}>
                         <Text style={styles.searchIcon}>🔍</Text>
                         <TextInput
                             style={styles.searchInput}
-                            placeholder="Search"
+                            placeholder="Buscar por nombre, matrícula o correo..."
                             placeholderTextColor="#94A3B8"
-                            value={searchTerm}
-                            onChangeText={setSearchTerm}
                         />
                     </View>
 
+                    {/* Filter Pills */}
                     <View style={styles.filtersRow}>
-                        <TouchableOpacity style={styles.filterPill}>
-                            <Text style={styles.filterPillText}>Todos</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.filterPill}>
-                            <Text style={styles.filterPillText}>Todos</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.filterPill}>
-                            <Text style={styles.filterPillText}>Todos</Text>
-                        </TouchableOpacity>
+                        <View style={[styles.filterPill, styles.filterPillActive]}>
+                            <Text style={[styles.filterPillText, styles.filterPillTextActive]}>
+                                Todos (4)
+                            </Text>
+                        </View>
+                        <View style={styles.filterPill}>
+                            <Text style={styles.filterPillText}>Admins (1)</Text>
+                        </View>
+                        <View style={styles.filterPill}>
+                            <Text style={styles.filterPillText}>Usuarios (3)</Text>
+                        </View>
+                        <View style={styles.filterPill}>
+                            <Text style={styles.filterPillText}>Bajas (1)</Text>
+                        </View>
                     </View>
 
-                    <TouchableOpacity style={styles.actionBtn} activeOpacity={0.85} onPress={() => navigateTo('publish')}>
-                        <Text style={styles.actionBtnText}>Solicitarr Servicio</Text>
-                    </TouchableOpacity>
-
-                    <View style={styles.usersList}>
-                        {filteredUsers.map((user) => (
-                            <TouchableOpacity
-                                key={user.id}
-                                style={styles.userCard}
-                                activeOpacity={0.8}
-                                onPress={() => handleUserClick(user.id)}
-                            >
-                                <Image source={{ uri: user.avatar }} style={styles.userAvatar} />
-                                <View style={styles.userInfo}>
-                                    <Text style={styles.userName}>{user.name}</Text>
-                                    <Text style={styles.userEmail}>{user.email}</Text>
-                                    <View style={styles.roleRow}>
-                                        <Text style={styles.roleIcon}>👤</Text>
-                                        <Text style={styles.roleText}>{user.role}</Text>
-                                    </View>
-                                </View>
-                                <View style={styles.badgeActive}>
-                                    <Text style={styles.badgeActiveText}>{user.status}</Text>
-                                </View>
-                            </TouchableOpacity>
-                        ))}
-                    </View>
+                    {/* Users List */}
+                    <FlatList
+                        data={USERS_LIST}
+                        keyExtractor={(item) => item.id}
+                        renderItem={renderUserCard}
+                        scrollEnabled={false}
+                        ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+                    />
                 </ScrollView>
             </View>
         </SafeAreaView>
@@ -186,28 +323,80 @@ const styles = StyleSheet.create({
     },
     contentScroll: {
         flex: 1,
+        backgroundColor: '#F8FAFC',
     },
     scrollPadding: {
         padding: 14,
         gap: 12,
         paddingBottom: 40,
     },
+    headerRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 8,
+    },
+    headerTitle: {
+        fontSize: 16,
+        fontWeight: '800',
+        color: '#1E293B',
+    },
+    headerSubtitle: {
+        fontSize: 10,
+        color: '#64748B',
+        marginTop: 2,
+    },
+    addBtn: {
+        backgroundColor: '#0084FF',
+        paddingHorizontal: 12,
+        paddingVertical: 7,
+        borderRadius: 14,
+    },
+    addBtnText: {
+        color: '#FFFFFF',
+        fontSize: 11,
+        fontWeight: '700',
+    },
+    statsRow: {
+        flexDirection: 'row',
+        gap: 6,
+    },
+    statBox: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        paddingVertical: 8,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
+    },
+    statNum: {
+        fontSize: 15,
+        fontWeight: '800',
+        color: '#1E293B',
+    },
+    statLabel: {
+        fontSize: 9,
+        color: '#64748B',
+        fontWeight: '600',
+    },
     searchBar: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#F1F5F9',
-        borderRadius: 20,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
         paddingHorizontal: 12,
         height: 38,
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
     },
     searchIcon: {
         fontSize: 12,
         marginRight: 6,
-        color: '#64748B',
     },
     searchInput: {
         flex: 1,
-        fontSize: 13,
+        fontSize: 12,
         color: '#1E293B',
     },
     filtersRow: {
@@ -216,90 +405,168 @@ const styles = StyleSheet.create({
     },
     filterPill: {
         flex: 1,
-        backgroundColor: colors.primary,
-        borderRadius: 16,
+        backgroundColor: '#E2E8F0',
+        borderRadius: 12,
         paddingVertical: 6,
         alignItems: 'center',
     },
+    filterPillActive: {
+        backgroundColor: '#0084FF',
+    },
     filterPillText: {
-        color: '#FFFFFF',
-        fontSize: 11,
+        color: '#475569',
+        fontSize: 10,
         fontWeight: '600',
     },
-    actionBtn: {
-        backgroundColor: colors.primary,
-        borderRadius: 22,
-        height: 42,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: '#0084FF',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.2,
-        shadowRadius: 6,
-        elevation: 3,
-    },
-    actionBtnText: {
+    filterPillTextActive: {
         color: '#FFFFFF',
-        fontSize: 13,
-        fontWeight: '600',
-    },
-    usersList: {
-        gap: 12,
-        marginTop: 6,
+        fontWeight: '700',
     },
     userCard: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        padding: 12,
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
+        gap: 10,
+    },
+    userCardInactive: {
+        backgroundColor: '#F8FAFC',
+        borderColor: '#CBD5E1',
+    },
+    userTopRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#FFFFFF',
-        borderRadius: 14,
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#F1F5F9',
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 1 },
-        shadowOpacity: 0.05,
-        shadowRadius: 3,
-        elevation: 1,
+        gap: 10,
     },
     userAvatar: {
-        width: 44,
-        height: 44,
-        borderRadius: 22,
-        marginRight: 10,
+        width: 46,
+        height: 46,
+        borderRadius: 23,
     },
     userInfo: {
         flex: 1,
+        gap: 2,
+    },
+    nameBadgeRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: 6,
     },
     userName: {
-        fontSize: 12,
+        fontSize: 13,
         fontWeight: '700',
         color: '#1E293B',
+        flex: 1,
+    },
+    roleBadge: {
+        paddingHorizontal: 8,
+        paddingVertical: 2,
+        borderRadius: 8,
+    },
+    roleBadgeAdmin: {
+        backgroundColor: '#EEF2FF',
+        borderWidth: 1,
+        borderColor: '#C7D2FE',
+    },
+    roleBadgeUser: {
+        backgroundColor: '#F1F5F9',
+    },
+    roleBadgeText: {
+        fontSize: 9,
+        fontWeight: '700',
+    },
+    roleTextAdmin: {
+        color: '#4338CA',
+    },
+    roleTextUser: {
+        color: '#475569',
     },
     userEmail: {
         fontSize: 10,
         color: '#64748B',
-        marginBottom: 2,
     },
-    roleRow: {
+    userMeta: {
+        fontSize: 10,
+        color: '#94A3B8',
+        fontWeight: '500',
+    },
+    controlsBox: {
+        backgroundColor: '#F8FAFC',
+        borderRadius: 12,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#E2E8F0',
+        gap: 8,
+    },
+    switchControlRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 4,
+        justifyContent: 'space-between',
+        gap: 8,
     },
-    roleIcon: {
-        fontSize: 10,
+    controlLabel: {
+        fontSize: 11,
+        fontWeight: '700',
+        color: '#1E293B',
     },
-    roleText: {
+    controlSub: {
         fontSize: 9,
-        color: '#94A3B8',
+        color: '#64748B',
     },
-    badgeActive: {
-        backgroundColor: '#10B981',
-        borderRadius: 12,
-        paddingHorizontal: 10,
-        paddingVertical: 4,
+    divider: {
+        height: 1,
+        backgroundColor: '#E2E8F0',
     },
-    badgeActiveText: {
-        color: '#FFFFFF',
+    actionsRow: {
+        flexDirection: 'row',
+        gap: 6,
+    },
+    actionChipBtn: {
+        flex: 1,
+        paddingVertical: 8,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    btnPromote: {
+        backgroundColor: '#EEF2FF',
+        borderWidth: 1,
+        borderColor: '#C7D2FE',
+    },
+    textPromote: {
+        color: '#4338CA',
+    },
+    btnDemote: {
+        backgroundColor: '#FEF3C7',
+        borderWidth: 1,
+        borderColor: '#FDE68A',
+    },
+    textDemote: {
+        color: '#B45309',
+    },
+    btnEdit: {
+        backgroundColor: '#EFF6FF',
+        borderWidth: 1,
+        borderColor: '#BFDBFE',
+    },
+    textEdit: {
+        fontSize: 10,
+        fontWeight: '700',
+        color: '#0084FF',
+    },
+    btnDelete: {
+        backgroundColor: '#FEE2E2',
+        borderWidth: 1,
+        borderColor: '#FECACA',
+    },
+    textDelete: {
+        fontSize: 10,
+        fontWeight: '700',
+        color: '#DC2626',
+    },
+    actionChipText: {
         fontSize: 10,
         fontWeight: '700',
     },

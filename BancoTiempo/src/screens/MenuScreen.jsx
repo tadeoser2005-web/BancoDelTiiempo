@@ -32,6 +32,9 @@ const SCREENS = [
     { id: 'adminTransactions', name: 'Admin Transacciones' },
     { id: 'adminGenerateReport', name: 'Admin Generar Reporte' },
     { id: 'adminReportPreview', name: 'Admin Vista Previa de Reporte' },
+    {id: 'Registro', name: 'Registrar'},
+    {id: 'adminCategorias', name:'Administrar categorias'},
+
 ];
 
 export const MenuScreen = ({ onSelectScreen }) => {

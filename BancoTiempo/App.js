@@ -25,7 +25,8 @@ import AdminTransactionsScreen from './src/screens/AdminTrasactionsScreen.jsx';
 import AdminGenerateReportScreen from './src/screens/AdminGenerateReportScreen.jsx';
 import ActiveExchangeScreen from './src/screens/ActiveExchangeScreen.jsx';
 import AdminReportPreviewScreen from './src/screens/AdminReportPreviewScreen.jsx';
-
+import RegisterScreen from "./src/screens/RegisterScreen";
+import AdminCategoriesScreen from "./src/screens/AminCategoriesScreen";
 export default function App() {
   const [selectedScreen, setSelectedScreen] = useState(null);
 
@@ -34,6 +35,8 @@ export default function App() {
   }
 
   switch (selectedScreen) {
+    case 'adminCategorias': return <AdminCategoriesScreen/>
+    case 'Registro': return <RegisterScreen/>
     case 'splash': return <SplashScreen />;
     case 'login': return <LoginScreen />;
     case 'home': return <HomeScreen userCredits={8.5} />;
