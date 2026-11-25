@@ -1,21 +1,31 @@
 {
   "name": "bancotiempo",
   "version": "1.0.0",
-  "main": "index.js",
-  "dependencies": {
-    "expo": "~58.0.23",
-    "expo-status-bar": "~58.0.4",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "react-native": "0.88.1",
-    "react-native-web": "^0.21.4",
-    "@react-buddy/ide-toolbox": "^2.5.0"
-  },
+  "description": "Banco del Tiempo y Talento - Universidad Politécnica de Querétaro (UPQ)",
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~58.0.17",
+    "babel-preset-expo": "~58.0.0",
+    "expo": "^58.0.0",
+    "expo-constants": "~58.0.16",
+    "expo-linking": "~58.0.17",
+    "expo-router": "~58.0.32",
+    "expo-status-bar": "~58.0.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "react-native": "0.88.1",
+    "react-native-safe-area-context": "~5.11.1",
+    "react-native-screens": "~4.30.1",
+    "react-native-web": "^0.21.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2"
   },
   "private": true
 }

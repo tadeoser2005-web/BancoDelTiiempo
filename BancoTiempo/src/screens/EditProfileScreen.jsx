@@ -17,6 +17,7 @@ const AVATAR_OPTIONS = [
 
 export const EditProfileScreen = ({
                                       onSaveProfile,
+                                      onBack,
                                   }) => {
     const [fullName, setFullName] = useState('Juan Ramirez');
     const [email, setEmail] = useState('juan.ramirez@upq.edu.mx');
@@ -82,10 +83,10 @@ export const EditProfileScreen = ({
             <StatusBar barStyle="dark-content" />
 
             <View style={styles.headerRow}>
-                <View style={styles.backBtn}>
+                <TouchableOpacity style={styles.backBtn} onPress={onBack} disabled={!onBack}>
                     <Text style={styles.backChevron}>‹</Text>
                     <Text style={styles.headerTitle}>Editar perfil</Text>
-                </View>
+                </TouchableOpacity>
 
                 <TouchableOpacity style={styles.saveTopBtn} onPress={handleSave}>
                     <Text style={styles.saveTopText}>Guardar</Text>

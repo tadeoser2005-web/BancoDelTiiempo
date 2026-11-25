@@ -15,6 +15,7 @@ import { colors } from '../styles/theme.js';
 
 export const PublishServiceScreen = ({
                                          onAddService,
+                                         onBack,
                                      }) => {
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('');
@@ -61,7 +62,9 @@ export const PublishServiceScreen = ({
             <StatusBar barStyle="dark-content" />
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 <View style={styles.headerRow}>
-                    <Text style={styles.backChevron}>‹</Text>
+                    <TouchableOpacity onPress={onBack} disabled={!onBack}>
+                        <Text style={styles.backChevron}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.headerTitle}>Publicar Servicio</Text>
                 </View>
 

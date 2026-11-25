@@ -10,19 +10,21 @@ import {
     Platform,
 } from 'react-native';
 
-export const ExploreScreen = () => {
+export const ExploreScreen = ({ onNavigate, onBack }) => {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content" />
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 <View style={styles.headerRow}>
-                    <Text style={styles.backChevron}>‹</Text>
+                    <TouchableOpacity onPress={onBack} disabled={!onBack}>
+                        <Text style={styles.backChevron}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.headerTitle}>Explorar</Text>
                 </View>
 
                 <Text style={styles.sectionHeading}>Servicios destacados</Text>
                 <View style={styles.gridRow}>
-                    <View style={styles.cardItem}>
+                    <TouchableOpacity style={styles.cardItem} onPress={() => onNavigate && onNavigate('serviceDetail')}>
                         <View style={[styles.illustrationBox, { backgroundColor: '#E0F2FE' }]}>
                             <View style={styles.phoneCalcMock}>
                                 <View style={styles.phoneScreenMock} />
@@ -38,9 +40,9 @@ export const ExploreScreen = () => {
                         </View>
                         <Text style={styles.serviceName}>Matemáticas</Text>
                         <Text style={styles.requestsCount}>2 Solicitudes</Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.cardItem}>
+                    <TouchableOpacity style={styles.cardItem} onPress={() => onNavigate && onNavigate('serviceDetail')}>
                         <View style={[styles.illustrationBox, { backgroundColor: '#0F172A' }]}>
                             <View style={styles.codeWindowMock}>
                                 <Text style={styles.codeBrackets}>&lt;/&gt;</Text>
@@ -48,9 +50,9 @@ export const ExploreScreen = () => {
                         </View>
                         <Text style={styles.serviceName}>Programación</Text>
                         <Text style={styles.requestsCount}>3 Solicitudes</Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.cardItem}>
+                    <TouchableOpacity style={styles.cardItem} onPress={() => onNavigate && onNavigate('serviceDetail')}>
                         <View style={[styles.illustrationBox, { backgroundColor: '#FEF2F2' }]}>
                             <View style={styles.pistonPill} />
                             <View style={styles.pistonRod} />
@@ -58,18 +60,18 @@ export const ExploreScreen = () => {
                         </View>
                         <Text style={styles.serviceName}>Mécanica CLS</Text>
                         <Text style={styles.requestsCount}>4 Solicitudes</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
                 <Text style={[styles.sectionHeading, { marginTop: 24 }]}>Servicios disponibles</Text>
                 <View style={styles.gridRow}>
-                    <View style={styles.cardItem}>
+                    <TouchableOpacity style={styles.cardItem} onPress={() => onNavigate && onNavigate('serviceDetail')}>
                         <View style={[styles.illustrationBox, { backgroundColor: '#FEF3C7' }]}>
                             <Text style={{ fontSize: 32 }}>👨‍🍳</Text>
                         </View>
                         <Text style={styles.serviceName}>Cocina</Text>
                         <Text style={styles.requestsCount}>3 Solicitudes</Text>
-                    </View>
+                    </TouchableOpacity>
 
                     <View style={styles.cardItem}>
                         <View style={[styles.illustrationBox, { backgroundColor: '#F3E8FF' }]}>

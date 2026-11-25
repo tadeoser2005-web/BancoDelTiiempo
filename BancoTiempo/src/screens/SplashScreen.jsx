@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { colors } from '../styles/theme.js';
 
-export const SplashScreen = () => {
+export const SplashScreen = ({ onNavigate }) => {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content" />
@@ -16,6 +16,7 @@ export const SplashScreen = () => {
                     <TouchableOpacity
                         style={styles.button}
                         activeOpacity={0.85}
+                        onPress={() => onNavigate && onNavigate('login')}
                     >
                         <Text style={styles.buttonText}>Iniciar Sesión</Text>
                     </TouchableOpacity>

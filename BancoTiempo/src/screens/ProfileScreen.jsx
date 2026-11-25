@@ -16,7 +16,7 @@ const DEFAULT_AVATARS = [
 
 ];//skins por defecto
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({ onNavigate, onBack }) => {
 
     const [isEditing, setIsEditing] = useState(false);
     const [profileName, setProfileName] = useState('Juan Ramirez');
@@ -41,6 +41,8 @@ export const ProfileScreen = () => {
     const handleBack = () => {
         if (isEditing) {
             setIsEditing(false);
+        } else if (onBack) {
+            onBack();
         }
     };
 
@@ -256,15 +258,15 @@ export const ProfileScreen = () => {
             </ScrollView>
 
             <View style={styles.bottomTabBar}>
-                <View style={styles.tabBtn}>
+                <TouchableOpacity style={styles.tabBtn} onPress={() => onNavigate && onNavigate('favorites')}>
                     <Text style={styles.tabIcon}>♡</Text>
-                </View>
-                <View style={styles.tabBtn}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tabBtn} onPress={() => onNavigate && onNavigate('home')}>
                     <Text style={styles.tabIcon}>⌂</Text>
-                </View>
-                <View style={styles.tabBtn}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tabBtn} onPress={() => onNavigate && onNavigate('profile')}>
                     <Text style={[styles.tabIcon, styles.activeTabIcon]}>👤</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );

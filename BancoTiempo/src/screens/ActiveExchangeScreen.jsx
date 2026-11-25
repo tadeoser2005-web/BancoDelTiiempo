@@ -7,17 +7,25 @@ import {
     StatusBar,
     ScrollView,
     Image,
+    TouchableOpacity,
 } from 'react-native';
 
-export const ActiveExchangeScreen = () => {
+export const ActiveExchangeScreen = ({ onNavigate, onBack }) => {
     return (
         <SafeAreaView style={styles.container}>
             <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 {/* Header */}
-                <View style={styles.header}>
-                    <Text style={styles.headerTitle}>Intercambio Activo</Text>
-                    <Text style={styles.headerSub}>Seguimiento en tiempo real</Text>
+                <View style={styles.headerRow}>
+                    {onBack ? (
+                        <TouchableOpacity style={styles.backBtn} activeOpacity={0.7} onPress={onBack}>
+                            <Text style={styles.backChevron}>‹</Text>
+                        </TouchableOpacity>
+                    ) : null}
+                    <View style={styles.header}>
+                        <Text style={styles.headerTitle}>Intercambio Activo</Text>
+                        <Text style={styles.headerSub}>Seguimiento en tiempo real</Text>
+                    </View>
                 </View>
 
                 <View style={styles.statusCard}>
@@ -62,9 +70,13 @@ export const ActiveExchangeScreen = () => {
                     </View>
                 </View>
 
-                <View style={styles.finishBtn}>
+                <TouchableOpacity
+                    style={styles.finishBtn}
+                    activeOpacity={0.85}
+                    onPress={() => onNavigate && onNavigate('rate')}
+                >
                     <Text style={styles.finishBtnText}>Concluir y Liberar Creditos </Text>
-                </View>
+                </TouchableOpacity>
             </ScrollView>
         </SafeAreaView>
     );
@@ -79,9 +91,27 @@ const styles = StyleSheet.create({
         padding: 20,
         alignItems: 'center',
     },
+    headerRow: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: 20,
+        position: 'relative',
+    },
+    backBtn: {
+        position: 'absolute',
+        left: 0,
+        padding: 4,
+    },
+    backChevron: {
+        fontSize: 32,
+        color: '#1E293B',
+        fontWeight: '300',
+        lineHeight: 32,
+    },
     header: {
         alignItems: 'center',
-        marginBottom: 20,
     },
     headerTitle: {
         fontSize: 20,

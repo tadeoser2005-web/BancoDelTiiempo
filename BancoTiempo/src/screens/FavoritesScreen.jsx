@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { colors } from '../styles/theme.js';
 
-export const FavoritesScreen = () => {
+export const FavoritesScreen = ({ onNavigate, onBack }) => {
     const [activeTab, setActiveTab] = useState('activos');
     const [favorites, setFavorites] = useState({
         'mat': true,
@@ -30,7 +30,9 @@ export const FavoritesScreen = () => {
             <StatusBar barStyle="dark-content" />
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 <View style={styles.headerRow}>
-                    <Text style={styles.backChevron}>‹</Text>
+                    <TouchableOpacity onPress={onBack} disabled={!onBack}>
+                        <Text style={styles.backChevron}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.headerTitle}>Mis favoritos</Text>
                 </View>
 
@@ -132,15 +134,15 @@ export const FavoritesScreen = () => {
             </ScrollView>
 
             <View style={styles.bottomTabBar}>
-                <View style={styles.tabBtn}>
+                <TouchableOpacity style={styles.tabBtn} onPress={() => onNavigate && onNavigate('favorites')}>
                     <Text style={[styles.tabIcon, styles.activeTabIcon]}>♥</Text>
-                </View>
-                <View style={styles.tabBtn}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tabBtn} onPress={() => onNavigate && onNavigate('home')}>
                     <Text style={styles.tabIcon}>⌂</Text>
-                </View>
-                <View style={styles.tabBtn}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tabBtn} onPress={() => onNavigate && onNavigate('profile')}>
                     <Text style={styles.tabIcon}>👤</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );

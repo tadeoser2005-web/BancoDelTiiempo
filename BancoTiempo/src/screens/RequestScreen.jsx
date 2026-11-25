@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { colors } from '../styles/theme.js';
 
-export const RequestsScreen = () => {
+export const RequestsScreen = ({ onNavigate, onBack }) => {
     const [activeTab, setActiveTab] = useState('enviadas');
 
     return (
@@ -19,7 +19,9 @@ export const RequestsScreen = () => {
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 {/* Header */}
                 <View style={styles.headerRow}>
-                    <Text style={styles.backChevron}>‹</Text>
+                    <TouchableOpacity onPress={onBack} disabled={!onBack}>
+                        <Text style={styles.backChevron}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.headerTitle}>Mis solicitudes</Text>
                 </View>
 
@@ -45,14 +47,14 @@ export const RequestsScreen = () => {
 
                 <Text style={styles.sectionHeading}>Servicios destacados</Text>
                 <View style={styles.gridRow}>
-                    <View style={styles.cardItem}>
+                    <TouchableOpacity style={styles.cardItem} onPress={() => onNavigate && onNavigate('requestDetail')}>
                         <View style={[styles.illustrationBox, { backgroundColor: '#E0F2FE' }]}>
                             <Text style={{ fontSize: 28 }}>📱</Text>
                         </View>
                         <Text style={styles.serviceName}>Matemáticas</Text>
                         <Text style={[styles.statusLabel, styles.statusWaiting]}>En espera</Text>
                         <Text style={styles.statusEmoji}>⏳</Text>
-                    </View>
+                    </TouchableOpacity>
 
                     <View style={styles.cardItem}>
                         <View style={[styles.illustrationBox, { backgroundColor: '#0F172A' }]}>

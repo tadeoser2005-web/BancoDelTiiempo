@@ -11,6 +11,7 @@ import {
 
 export const CreditsScreen = ({
                                   credits = 8.5,
+                                  onBack,
                               }) => {
     return (
         <SafeAreaView style={styles.container}>
@@ -18,7 +19,9 @@ export const CreditsScreen = ({
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 {/* Header */}
                 <View style={styles.headerRow}>
-                    <Text style={styles.backChevron}>‹</Text>
+                    <TouchableOpacity onPress={onBack} disabled={!onBack}>
+                        <Text style={styles.backChevron}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.headerTitle}>Mis créditos</Text>
                 </View>
 

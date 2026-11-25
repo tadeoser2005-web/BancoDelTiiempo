@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { colors } from '../styles/theme.js';
 
-export const LoginScreen = () => {
+export const LoginScreen = ({ onNavigate }) => {
     const [email, setEmail] = useState('max@vaictam.upq.mx');
     const [password, setPassword] = useState('password123');
     const [confirmPassword, setConfirmPassword] = useState('password123');
@@ -44,6 +44,7 @@ export const LoginScreen = () => {
         if (Platform.OS !== 'web') {
             Alert.alert('¡Bienvenido!', 'Credenciales verificadas exitosamente.');
         }
+        onNavigate && onNavigate('home');
     };
 
     return (
@@ -103,6 +104,14 @@ export const LoginScreen = () => {
                         >
                             <Text style={styles.buttonText}>Comenzar</Text>
                         </TouchableOpacity>
+                        {onNavigate ? (
+                            <TouchableOpacity
+                                style={styles.registerButton}
+                                onPress={() => onNavigate('Registro')}
+                            >
+                                <Text style={styles.registerText}>Crear una cuenta</Text>
+                            </TouchableOpacity>
+                        ) : null}
                     </View>
                 </View>
             </KeyboardAvoidingView>
@@ -171,6 +180,15 @@ const styles = StyleSheet.create({
     buttonText: {
         color: '#FFFFFF',
         fontSize: 16,
+        fontWeight: '600',
+    },
+    registerButton: {
+        alignItems: 'center',
+        paddingVertical: 8,
+    },
+    registerText: {
+        color: colors.primary,
+        fontSize: 14,
         fontWeight: '600',
     },
 });

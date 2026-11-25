@@ -15,6 +15,7 @@ import { colors } from '../styles/theme.js';
 
 export const RequestDetailScreen = ({
                                         onRequestUpdate,
+                                        onBack,
                                     }) => {
     const [status, setStatus] = useState('Pendiente');
     const [notice, setNotice] = useState('');
@@ -45,7 +46,9 @@ export const RequestDetailScreen = ({
             <StatusBar barStyle="dark-content" />
             <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
                 <View style={styles.headerRow}>
-                    <Text style={styles.backChevron}>‹</Text>
+                    <TouchableOpacity onPress={onBack} disabled={!onBack}>
+                        <Text style={styles.backChevron}>‹</Text>
+                    </TouchableOpacity>
                     <Text style={styles.headerTitle}>Detalle de Solicitud</Text>
                 </View>
 

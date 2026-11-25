@@ -25,8 +25,8 @@ import AdminTransactionsScreen from './src/screens/AdminTrasactionsScreen.jsx';
 import AdminGenerateReportScreen from './src/screens/AdminGenerateReportScreen.jsx';
 import ActiveExchangeScreen from './src/screens/ActiveExchangeScreen.jsx';
 import AdminReportPreviewScreen from './src/screens/AdminReportPreviewScreen.jsx';
-import RegisterScreen from "./src/screens/RegisterScreen";
-import AdminCategoriesScreen from "./src/screens/AminCategoriesScreen";
+import RegisterScreen from "./src/screens/RegisterScreen.jsx";
+import AdminCategoriesScreen from "./src/screens/AdminCategoriesScreen.jsx";
 export default function App() {
   const [selectedScreen, setSelectedScreen] = useState(null);
 

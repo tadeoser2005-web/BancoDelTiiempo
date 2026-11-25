@@ -13,6 +13,7 @@ import { colors } from '../styles/theme.js';
 
 export const HomeScreen = ({
                                userCredits = 8.5,
+                               onNavigate,
                            }) => {
     return (
         <SafeAreaView style={styles.container}>
@@ -34,26 +35,26 @@ export const HomeScreen = ({
                 </View>
 
                 <View style={styles.actionsRow}>
-                    <View style={styles.actionBtn}>
+                    <TouchableOpacity style={styles.actionBtn} onPress={() => onNavigate && onNavigate('explore')}>
                         <View style={styles.actionIconBox}>
                             <Text style={styles.actionIconEmoji}>🔍</Text>
                         </View>
                         <Text style={styles.actionLabel}>Explorar</Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.actionBtn}>
+                    <TouchableOpacity style={styles.actionBtn} onPress={() => onNavigate && onNavigate('publish')}>
                         <View style={styles.actionIconBox}>
                             <Text style={styles.actionIconEmoji}>✏️</Text>
                         </View>
                         <Text style={styles.actionLabel}>Publicar</Text>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.actionBtn}>
+                    <TouchableOpacity style={styles.actionBtn} onPress={() => onNavigate && onNavigate('requests')}>
                         <View style={styles.actionIconBox}>
                             <Text style={styles.actionIconEmoji}>✉️</Text>
                         </View>
                         <Text style={styles.actionLabel}>Mis solicitudes</Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
 
                 <View style={styles.sectionHeader}>
@@ -62,7 +63,7 @@ export const HomeScreen = ({
                 </View>
 
 
-                <View style={styles.serviceRow}>
+                <TouchableOpacity style={styles.serviceRow} onPress={() => onNavigate && onNavigate('serviceDetail')}>
                     <Image
                         source={{ }}//imagen de programacion
                         style={styles.serviceAvatar}
@@ -76,9 +77,9 @@ export const HomeScreen = ({
                         </View>
                     </View>
                     <Text style={styles.durationText}>1 hora</Text>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.serviceRow}>
+                <TouchableOpacity style={styles.serviceRow} onPress={() => onNavigate && onNavigate('serviceDetail')}>
                     <Image
                         source={{ }}//aqui va imagen
                         style={styles.serviceAvatar}
@@ -92,19 +93,19 @@ export const HomeScreen = ({
                         </View>
                     </View>
                     <Text style={styles.durationText}>50 min</Text>
-                </View>
+                </TouchableOpacity>
             </ScrollView>
 
             <View style={styles.bottomTabBar}>
-                <View style={styles.tabBtn}>
+                <TouchableOpacity style={styles.tabBtn} onPress={() => onNavigate && onNavigate('favorites')}>
                     <Text style={styles.tabIcon}>♡</Text>
-                </View>
-                <View style={styles.tabBtn}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tabBtn} onPress={() => onNavigate && onNavigate('home')}>
                     <Text style={[styles.tabIcon, styles.activeTabIcon]}>⌂</Text>
-                </View>
-                <View style={styles.tabBtn}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.tabBtn} onPress={() => onNavigate && onNavigate('profile')}>
                     <Text style={styles.tabIcon}>👤</Text>
-                </View>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     );

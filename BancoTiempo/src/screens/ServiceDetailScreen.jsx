@@ -14,6 +14,7 @@ import {
 
 export const ServiceDetailScreen = ({
                                         userCredits = 8.5,
+                                        onBack,
                                     }) => {
     const [isFavorite, setIsFavorite] = useState(false);
     const [selectedDate, setSelectedDate] = useState('06/11/2026');
@@ -40,10 +41,10 @@ export const ServiceDetailScreen = ({
             <StatusBar barStyle="dark-content" />
 
             <View style={styles.header}>
-                <View style={styles.backBtn}>
+                <TouchableOpacity style={styles.backBtn} onPress={onBack} disabled={!onBack}>
                     <Text style={styles.backArrow}>‹</Text>
                     <Text style={styles.headerTitle}>Detalle del Servicio</Text>
-                </View>
+                </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.favBtn}
